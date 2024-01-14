@@ -44,6 +44,11 @@
     var svg = d3
       .select("body")
       .append("svg")
+      .call(d3.zoom()
+        .extent([[0, 0], [width, height]])
+        .scaleExtent([1, 8])
+        .on("zoom", zoomed)
+      )
       .attr("width", width + margin.right + margin.left)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -232,6 +237,30 @@
         }
         update(d);
       }
+    }
+
+    /**
+     * Reference
+     * 
+     * https://observablehq.com/@d3/d3v6-migration-guide
+     * 
+     **/
+
+    function dragstarted() {
+      d3.select(this).raise();
+      g.attr("cursor", "grabbing");
+    }
+
+    function dragged(event, d) {
+      d3.select(this).attr("cx", d.x = event.x).attr("cy", d.y = event.y);
+    }
+
+    function dragended() {
+      g.attr("cursor", "grab");
+    }
+
+    function zoomed({ transform }) {
+      svg.attr("transform", transform);
     }
   </script>
 </body>
