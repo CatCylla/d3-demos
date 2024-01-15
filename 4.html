@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vertical Tree with D3</title>
+    <style>
+      .node circle {
+        fill: #fff;
+        stroke: steelblue;
+        stroke-width: 1px;
+      }
+
+      .link {
+        fill: none;
+        stroke: #9ecae1;
+        stroke-width: 1.5px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.7.0/d3.min.js"></script>
+    <script>
+      const data = {
+        name: "Visualisation tools",
+        children: [
+          {
+            name: "Interactive tools",
+            free: true,
+            description: "Interactive authoring tools",
+            children: [
+              {
+                name: "Browser-based",
+                description:
+                  "Web-based 'cloud' applications for authoring data visualisations",
+                free: true,
+                children: [
+                  {
+                    name: "Datawrapper",
+                    description:
+                      "An open-source platform for publishing charts on the web. Cloud-based or self-hosted.",
+                    url: "https://datawrapper.de/",
+                    free: true,
+                  },
+                  {
+                    name: "Google Sheets",
+                    description: "Spreadsheet in the cloud with charting",
+                    free: true,
+                  },
+                  {
+                    name: "plotly",
+                    description:
+                      "Cloud-based interactive tool for creating data visualisations",
+                    url: "https://plot.ly/",
+                    free: true,
+                  },
+                  {
+                    name: "RAW",
+                    description:
+                      "Open-source interactive tool for creating and exporting D3-like charts",
+                    url: "http://raw.densitydesign.org/",
+                    free: true,
+                  },
+                ],
+              },
+              {
+                name: "Desktop",
+                children: [
+                  {
+                    name: "Tableau Desktop",
+                    description:
+                      "Powerful tool for data analytics and visualisation",
+                    url: "http://www.tableausoftware.com/products/desktop",
+                  },
+                  {
+                    name: "Tableau Public",
+                    description:
+                      "Free version of Tableau Desktop where charts are public",
+                    url: "http://www.tableausoftware.com/products/public",
+                    free: true,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Coding",
+            description: "Code-based data visualisation creation",
+            free: true,
+            children: [
+              {
+                name: "JavaScript",
+                description:
+                  "The language behind most (all?) browser-based data visualisations",
+                free: true,
+                children: [
+                  {
+                    name: "Charting libraries",
+                    description:
+                      "Off-the-shelf pre-designed charts. Easy to use but less flexible.",
+                    free: true,
+                    children: [
+                      {
+                        name: "Google Charts",
+                        description:
+                          "A good selection of charts including bar, line, scatter, geo, pie, donut, org etc.",
+                        url: "https://developers.google.com/chart/",
+                        free: true,
+                      },
+                      {
+                        name: "HighCharts",
+                        description:
+                          "A well maintained commercial library of commonly used chart types",
+                        url: "https://www.highcharts.com/",
+                      },
+                      {
+                        name: "InfoVis",
+                        description:
+                          "A lovely selection of charts including bar, pie, sunburst, icicle, network, trees etc.",
+                        url: "https://philogb.github.io/jit/",
+                        free: true,
+                      },
+                      {
+                        name: "Mapping",
+                        description:
+                          "Libraries for visualising geographic data",
+                        free: true,
+                        children: [
+                          {
+                            name: "Kartograph",
+                            description:
+                              "Lovely vector based mapping library with good browser support",
+                            url: "http://kartograph.org/",
+                            free: true,
+                          },
+                          {
+                            name: "Leaflet",
+                            description: "Tile-based mapping library",
+                            url: "http://leafletjs.com/",
+                            free: true,
+                          },
+                        ],
+                      },
+                      {
+                        name: "MetricsGraphics.js",
+                        description:
+                          "Beautiful line, scatter and histogram charts built on top of D3",
+                        url: "http://metricsgraphicsjs.org/",
+                        free: true,
+                      },
+                      {
+                        name: "NVD3",
+                        description:
+                          "A general purpose charting library built on top of D3",
+                        url: "http://nvd3.org/",
+                        free: true,
+                      },
+                      {
+                        name: "Sigma",
+                        description: "Library for visualising networks",
+                        url: "http://sigmajs.org/",
+                        free: true,
+                      },
+                    ],
+                  },
+                  {
+                    name: "Custom coded",
+                    description:
+                      "For maximum flexibility, custom coding is the way to go. These libraries will lend a hand.",
+                    free: true,
+                    children: [
+                      {
+                        name: "D3",
+                        description:
+                          "The jewel in the crown of web-based data visualisation. A library packed full of components for building any data visualisation you can imagine.",
+                        url: "https://d3js.org/",
+                        free: true,
+                      },
+                      {
+                        name: "Ractive",
+                        description:
+                          "Relatively new, Ractive helps you make your HTML and SVG interactive",
+                        url: "http://www.ractivejs.org/",
+                        free: true,
+                      },
+                      {
+                        name: "Raphaël",
+                        description:
+                          "A general purpose drawing library with good browser support",
+                        url: "http://raphaeljs.com/",
+                        free: true,
+                      },
+                      {
+                        name: "Snap.svg",
+                        description:
+                          "A modern version of Raphaël that supports modern browsers",
+                        url: "http://snapsvg.io/",
+                        free: true,
+                      },
+                      {
+                        name: "Variance",
+                        description:
+                          "A declarative, mark-up based data visualisation library",
+                        url: "https://variancecharts.com/",
+                      },
+                      {
+                        name: "Vega",
+                        description:
+                          "A declarative language for specifying data visualistions",
+                        url: "https://trifacta.github.io/vega/",
+                        free: true,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Other",
+                description:
+                  "Non-JavaScript languages for producing web-based data visualisations",
+                free: true,
+                children: [
+                  {
+                    name: "Python",
+                    description:
+                      "Python's a very popular language in data science and is a pleasant language to learn and use",
+                    free: true,
+                    children: [
+                      {
+                        name: "Bokeh",
+                        description:
+                          "A powerful tool for producing interactive plots, dashboards and data applications",
+                        url: "https://bokeh.pydata.org/",
+                        free: true,
+                      },
+                    ],
+                  },
+                  {
+                    name: "R",
+                    description: "Very popular language for data science",
+                    free: true,
+                    children: [
+                      {
+                        name: "Shiny",
+                        description:
+                          "A platform for producing web applications using R",
+                        url: "http://shiny.rstudio.com/",
+                        free: true,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+    </script>
+    <script>
+      const margin = { top: 30, right: 20, bottom: 30, left: 20 };
+      const width = 960;
+      const barHeight = 20;
+      const barWidth = (width - margin.left - margin.right) * 0.8;
+      const duration = 400;
+      let i = 0;
+      let root;
+
+      const elbow = (d) =>
+        `M${d.source.y},${d.source.x} V${d.target.x} H${d.target.y}`;
+
+      const color = (d) =>
+        d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
+
+      const update = (source) => {
+        // Compute the flattened node list
+        const nodes = root.descendants();
+
+        const height = Math.max(
+          500,
+          nodes.length * barHeight + margin.top + margin.bottom
+        );
+
+        d3.select("svg").transition().duration(duration).attr("height", height);
+
+        // Compute the layout
+        root.eachBefore((n, i) => {
+          n.x = i * barHeight;
+          n.y = n.depth * 40;
+        });
+
+        // Update the nodes…
+        const node = svg
+          .selectAll(".node")
+          .data(nodes, (d) => d.id || (d.id = ++i));
+
+        const nodeEnter = node
+          .enter()
+          .append("g")
+          .attr("class", "node")
+          .attr("transform", (d) => `translate(${source.y0},${source.x0})`)
+          .style("opacity", 0)
+          .on("click", click);
+
+        nodeEnter
+          .append("circle")
+          .attr("r", 7)
+          .style("fill", (d) => (d.children ? "lightsteelblue" : "#fff"));
+
+        nodeEnter
+          .append("text")
+          .attr("dy", 3.5)
+          .attr("dx", (d) => 10 + d.depth)
+          .text((d) => d.data.name);
+
+        // update
+        var nodeUpdate = node.merge(nodeEnter).transition().duration(duration);
+
+        nodeUpdate.attr("transform", (d) => `translate(${d.y},${d.x})`);
+
+        nodeUpdate
+          .attr("r", 7)
+          .style("fill", (d) => (d.children ? "lightsteelblue" : "#fff"));
+
+        nodeUpdate.select("text").style("fill-opacity", 1);
+
+        // Transition nodes to their new position.
+        nodeEnter
+          .transition()
+          .duration(duration)
+          .attr("transform", (d) => `translate(${d.y},${d.x})`)
+          .style("opacity", 1);
+
+        node
+          .transition()
+          .duration(duration)
+          .attr("transform", function (d) {
+            return "translate(" + d.y + "," + d.x + ")";
+          })
+          .style("opacity", 1);
+
+        // Transition exiting nodes to the parent's new position.
+        node
+          .exit()
+          .transition()
+          .duration(duration)
+          .attr("transform", (d) => `translate(${source.y}, ${source.x}")`)
+          .style("opacity", 0)
+          .remove();
+
+        var nodeExit = node.exit().transition().duration(duration);
+
+        nodeExit
+          .attr("transform", (d) => `translate(${source.y},${source.x})`)
+          .remove();
+
+        nodeExit.select("circle").attr("r", 1e-6);
+
+        nodeExit.select("text").style("fill-opacity", 1e-6);
+
+        // Update the links…
+        var link = svg
+          .selectAll(".link")
+          .data(root.links(), (d) => d.target.id);
+
+        // Enter any new links at the parent's previous position.
+        link
+          .enter()
+          .insert("path", "g")
+          .attr("class", "link")
+          .attr("d", (d) => {
+            const o = { x: source.x0, y: source.y0 };
+            return elbow({ source: o, target: o });
+          })
+          .transition()
+          .duration(duration)
+          .attr("d", elbow);
+
+        // Transition links to their new position.
+        link.transition().duration(duration).attr("d", elbow);
+
+        // Transition exiting nodes to the parent's new position.
+        link
+          .exit()
+          .transition()
+          .duration(duration)
+          .attr("d", (d) => {
+            const o = {
+              x: source.x,
+              y: source.y,
+              parent: { x: source.x, y: source.y },
+            };
+            return elbow({ source: o, target: o });
+          })
+          .remove();
+
+        // Stash the old positions for transition.
+        root.each(function (d) {
+          d.x0 = d.x;
+          d.y0 = d.y;
+        });
+      };
+
+      const click = (event, d) => {
+        if (d.children) {
+          d._children = d.children;
+          d.children = null;
+        } else {
+          d.children = d._children;
+          d._children = null;
+        }
+        update(d);
+      };
+
+      // svg
+      const svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", width)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+      // initial tree
+      root = d3.hierarchy(data);
+      root.x0 = 0;
+      root.y0 = 0;
+      update(root);
+    </script>
+  </body>
+</html>
