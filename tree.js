@@ -30,8 +30,8 @@ var treeData = {
 };
 
 var margin = { top: 20, right: 90, bottom: 30, left: 90 },
-  width = 960 - margin.left - margin.right,
-  height = 500 - margin.top - margin.bottom;
+  width = 806 - margin.left - margin.right,
+  height = 420 - margin.top - margin.bottom;
 var svg = d3
   .select("body")
   .append("svg")
@@ -49,7 +49,7 @@ root = d3.hierarchy(treeData, function (d) {
 });
 root.x0 = height / 2;
 root.y0 = 0;
-root.children.forEach(collapse);
+root.children.forEach(n => n.children?.forEach(collapse));
 
 update(root);
 function collapse(d) {
