@@ -77,7 +77,7 @@ function update(source) {
     .attr("transform", function (d) {
       return "translate(" + source.y0 + "," + source.x0 + ")";
     })
-    .on("click", click);
+    .on("click", nodeClick);
   nodeEnter
     .attr("class", "node")
     .attr("r", 1e-6)
@@ -192,7 +192,7 @@ function update(source) {
 
     return path;
   }
-  function click(d) {
+  function nodeClick(d) {
     if (d.children) {
       d._children = d.children;
       d.children = null;
