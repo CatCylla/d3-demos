@@ -47,6 +47,12 @@ Examples for D3 7.x
 
 [Source Code](./demo-2/README.md)
 
+### Example 7
+
+![S7](./imgs/7.png "basic layout")
+
+[Source Code](./demo-3/index.html)
+
 
 ## Reference
 
